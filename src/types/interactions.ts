@@ -10,6 +10,7 @@ import {
 } from './messageComponents.ts'
 import type { InteractionApplicationCommandData } from './applicationCommand.ts'
 import type { UserPayload } from './user.ts'
+import type { ApplicationCommandChoice } from './applicationCommand.ts'
 
 export enum InteractionType {
   /** Ping sent by the API (HTTP-only) */
@@ -17,7 +18,8 @@ export enum InteractionType {
   /** Slash Command Interaction */
   APPLICATION_COMMAND = 2,
   /** Message Component Interaction */
-  MESSAGE_COMPONENT = 3
+  MESSAGE_COMPONENT = 3,
+  AUTOCOMPLETE = 4
 }
 
 export interface InteractionMemberPayload extends MemberPayload {
@@ -48,6 +50,8 @@ export interface InteractionPayload {
   application_id: string
   /** Message ID if the Interaction was of type MESSAGE_COMPONENT */
   message?: MessagePayload
+  /** read-only property, always `1`  */
+  readonly version: number
 }
 
 export enum InteractionResponseType {
@@ -60,7 +64,8 @@ export enum InteractionResponseType {
   /** Components: It will acknowledge the interaction and update the button to a loading state, and then you can PATCH the message later. */
   DEFERRED_MESSAGE_UPDATE = 6,
   /** Components: Sent in response to a button interaction to immediately update the message to which the button was attached */
-  UPDATE_MESSAGE = 7
+  UPDATE_MESSAGE = 7,
+  AUTOCOMPLETE_RESULT = 8
 }
 
 export interface InteractionResponsePayload {
@@ -80,6 +85,8 @@ export interface InteractionResponseDataPayload {
   allowed_mentions?: AllowedMentionsPayload
   flags?: number
   components?: MessageComponentData[]
+  /** autocomplete choices (limited to 25 choices) */
+  choices?: ApplicationCommandChoice[]
 }
 
 export enum InteractionResponseFlags {

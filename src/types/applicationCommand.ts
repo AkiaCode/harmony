@@ -13,6 +13,7 @@ export interface InteractionApplicationCommandOption {
   value?: any
   /** Sub options */
   options?: InteractionApplicationCommandOption[]
+  focused: boolean
 }
 
 export interface InteractionChannelPayload {
@@ -96,6 +97,8 @@ export interface ApplicationCommandOptionBase<
   choices?: ApplicationCommandChoice[]
   /** Nested options for Sub-Command or Sub-Command-Groups */
   options?: T[]
+  /** autocomplete (NOTE: `choices` cannot be present when this is true) */
+  autocomplete?: boolean
 }
 
 export type { ApplicationCommandOptionBase as SlashCommandOptionBase }
