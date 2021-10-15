@@ -35,8 +35,7 @@ import { TextChannel } from './textChannel.ts'
 import { User } from './user.ts'
 import type { ApplicationCommandInteraction } from './applicationCommand.ts'
 import type { MessageComponentInteraction } from './messageComponents.ts'
-import type { ApplicationCommandChoice } from './applicationCommand.ts'
-
+import type { ApplicationCommandChoice } from '../types/applicationCommand.ts'
 
 interface WebhookMessageOptions extends MessageOptions {
   name?: string
@@ -56,7 +55,7 @@ export interface InteractionMessageOptions {
   allowedMentions?: AllowedMentionsPayload
   /** Whether the Message Response should be Ephemeral (only visible to User) or not */
   ephemeral?: boolean
-  components?: MessageComponentData[],
+  components?: MessageComponentData[]
   /** autocomplete choices (limited to 25 choices) */
   choices?: ApplicationCommandChoice[]
 }
@@ -204,9 +203,10 @@ export class Interaction extends SnowflakeBase {
                 data.components === undefined
                   ? undefined
                   : transformComponent(data.components)
-            } : data.type === InteractionResponseType.AUTOCOMPLETE_RESULT
-            ? {
-              choices: data.choices ?? [],
+            }
+          : data.type === InteractionResponseType.AUTOCOMPLETE_RESULT
+          ? {
+              choices: data.choices ?? []
             }
           : undefined
     }

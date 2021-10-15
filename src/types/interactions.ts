@@ -9,8 +9,8 @@ import {
   MessageComponentData
 } from './messageComponents.ts'
 import type { InteractionApplicationCommandData } from './applicationCommand.ts'
+import type { ApplicationCommandChoice } from '../types/applicationCommand.ts'
 import type { UserPayload } from './user.ts'
-import type { ApplicationCommandChoice } from './applicationCommand.ts'
 
 export enum InteractionType {
   /** Ping sent by the API (HTTP-only) */
@@ -72,7 +72,9 @@ export interface InteractionResponsePayload {
   /** Type of the response */
   type: InteractionResponseType
   /** Data to be sent with response. Optional for types: Pong, Acknowledge, Ack with Source */
-  data?: InteractionResponseDataPayload
+  data?:
+    | InteractionResponseDataPayload
+    | { choices?: ApplicationCommandChoice[] }
 }
 
 export interface InteractionResponseDataPayload {
@@ -85,8 +87,6 @@ export interface InteractionResponseDataPayload {
   allowed_mentions?: AllowedMentionsPayload
   flags?: number
   components?: MessageComponentData[]
-  /** autocomplete choices (limited to 25 choices) */
-  choices?: ApplicationCommandChoice[]
 }
 
 export enum InteractionResponseFlags {
